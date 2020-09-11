@@ -25,13 +25,17 @@ export default {
 
 .tab-bar{
   display: flex;
-  height: 49px;
-  background-color: #f6f6f6;
-  position: fixed;
-  left:0px;
-  right: 0px;
-  bottom: 0px;
-  box-shadow: 0px -3px 1px rgba(100,100,100,.2);
+
+    background-color: #f6f6f6;
+
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    box-shadow: 0 -1px 1px rgba(100,100,100,.2);
+
+
 }
 
 

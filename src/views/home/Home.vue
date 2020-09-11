@@ -6,6 +6,72 @@
 
       <home-swiper :items="banner.list" ></home-swiper>
       <recommend :items="recommend.list" />
+
+      <feature-view ></feature-view>
+
+      <tab-controller :items="['流行','新款','精选']" class="tab-control"></tab-controller>
+
+
+      <ul>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+        <li>001</li>
+      </ul>
+
+
   </div>
 </template>
 
@@ -18,6 +84,10 @@ import {getHomeMultiData} from 'network/HomeNetwork.js'
 import HomeSwiper from '@/views/home/childComps/HomeSwiper'
 
 import Recommend from '@/views/home/childComps/Recommend'
+
+import FeatureView from '@/views/home/childComps/FeatureView'
+
+import TabController from '@/components/content/tabController/TabController'
 
 
 export default {
@@ -32,7 +102,10 @@ export default {
    components : {
      NavBar,
      HomeSwiper,
-     Recommend
+     Recommend,
+     FeatureView,
+     TabController
+
    },
    created() {
 
@@ -55,7 +128,10 @@ export default {
 
 <style scoped>
 
-.home{
+#home {
+  padding-top: 44px;
+  height: 100vh;
+  position: relative;
 
 }
 
@@ -64,6 +140,17 @@ export default {
  box-shadow: 0 1px 1px rgba(100, 100, 100, .3);
  background-color: var(--color-tint);
  color :white;
+ position: fixed;
+ left: 0px;
+ right: 0px;
+ top: 0px;
+ z-index: 99;
 }
+
+.tab-control{
+  position:sticky;
+  top : 100px;
+}
+
 
 </style>

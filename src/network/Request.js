@@ -6,6 +6,12 @@ const axiosInst = axios.create({
   timeout : 5000
 });
 
+
+const myAxiosInst = axios.create({
+  baseURL : 'http://localhost:8080',
+  timeout : 5000
+});
+
 export function request(config,success,failure){
 
   //发送真正的网络请求
@@ -39,4 +45,24 @@ export function request(config,success,failure){
   });
 
   return axiosInst(config);
+}
+
+
+
+
+
+
+
+
+
+
+export function myRequest(config,success,failure){
+
+  myAxiosInst.interceptors.response.use(result=>{
+    return result.data;
+  },error =>{
+    console.log(error);
+  });
+
+  return myAxiosInst(config);
 }
