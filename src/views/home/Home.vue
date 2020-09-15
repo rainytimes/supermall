@@ -12,6 +12,8 @@
       <tab-controller :items="['流行','新款','精选']" class="tab-control"></tab-controller>
 
 
+      <panel-list :items="goods" prefix="https://img12.360buyimg.com/mobilecms/s372x372_"  />
+
       <ul>
         <li>001</li>
         <li>001</li>
@@ -79,7 +81,7 @@
 
 import NavBar from '@/components/common/navbar/NavBar'
 
-import {getHomeMultiData} from 'network/HomeNetwork.js'
+import {getHomeMultiData,getHomeGoods} from 'network/HomeNetwork.js'
 
 import HomeSwiper from '@/views/home/childComps/HomeSwiper'
 
@@ -89,6 +91,8 @@ import FeatureView from '@/views/home/childComps/FeatureView'
 
 import TabController from '@/components/content/tabController/TabController'
 
+import PanelList from '@/components/common/panellist/PanelList'
+
 
 export default {
    data(){
@@ -96,7 +100,8 @@ export default {
        banner:[],
        recommend:[],
        keywords:[],
-       dKeyword:[]
+       dKeyword:[],
+       goods : []
      };
    },
    components : {
@@ -104,7 +109,8 @@ export default {
      HomeSwiper,
      Recommend,
      FeatureView,
-     TabController
+     TabController,
+     PanelList
 
    },
    created() {
@@ -116,6 +122,16 @@ export default {
         this.keywords = result.data.keywords;
         this.dKeyword = result.data.dKeyword;
       });
+
+
+      getHomeGoods()
+      .then(result=>{
+          console.log(result);
+          this.goods = result.data;
+      });
+
+
+
 
    },
    mounted(){
@@ -150,6 +166,7 @@ export default {
 .tab-control{
   position:sticky;
   top : 100px;
+  z-index: 100px;
 }
 
 

@@ -1,4 +1,5 @@
-import {request} from './Request';
+import {request,myRequest} from './Request';
+import Axios from 'axios';
 
 /* const homeNetwork = {
 
@@ -19,5 +20,8 @@ export  function  getHomeMultiData() {
 
 export function getHomeGoods(){
 
+  return myRequest({
+    url : '/data/goods'
+  });
 
 }
