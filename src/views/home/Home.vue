@@ -3,77 +3,21 @@
       <nav-bar class="home-nav" >
           <div slot="center"   >购物街</div>
       </nav-bar>
+      <scroll class="homeScroll" ref="scroll" @scrolling="scrolling" > 
+        <home-swiper :items="banner.list" ></home-swiper>
+        
+        <recommend :items="recommend.list" />
 
-      <home-swiper :items="banner.list" ></home-swiper>
-      <recommend :items="recommend.list" />
+        <feature-view></feature-view>
 
-      <feature-view ></feature-view>
+        <tab-controller :items="['流行','新款','精选']" class="tab-control"></tab-controller>
 
-      <tab-controller :items="['流行','新款','精选']" class="tab-control"></tab-controller>
+        <panel-list :items="goods" prefix="https://img12.360buyimg.com/mobilecms/s372x372_"  />
 
+      </scroll>
+      <back-top :scroll="$refs.scroll" :show="showGoTop" />
 
-      <panel-list :items="goods" prefix="https://img12.360buyimg.com/mobilecms/s372x372_"  />
-
-      <ul>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-        <li>001</li>
-      </ul>
-
-
+    
   </div>
 </template>
 
@@ -93,6 +37,10 @@ import TabController from '@/components/content/tabController/TabController'
 
 import PanelList from '@/components/common/panellist/PanelList'
 
+import Scroll from '@/components/common/scroll'
+
+import BackTop from '@/components/content/backTop/BackTop'
+
 
 export default {
    data(){
@@ -101,7 +49,8 @@ export default {
        recommend:[],
        keywords:[],
        dKeyword:[],
-       goods : []
+       goods : [],
+       showGoTop : false
      };
    },
    components : {
@@ -110,7 +59,10 @@ export default {
      Recommend,
      FeatureView,
      TabController,
-     PanelList
+     PanelList,
+     BackTop,
+     Scroll
+    
 
    },
    created() {
@@ -138,6 +90,14 @@ export default {
     //  console.log('===mounted====1===');
     //  console.log(this.result);
     //  console.log('===mounted====2===');
+
+    //this.$refs.scroll.on
+
+   },
+   methods : {
+     scrolling(position){
+        this.showGoTop = (position.y < -15);
+     }
    }
 }
 </script>
@@ -145,9 +105,19 @@ export default {
 <style scoped>
 
 #home {
-  padding-top: 44px;
+ 
   height: 100vh;
   position: relative;
+}
+
+.homeScroll{
+
+  position: absolute;
+  top:44px;
+  bottom: 10px;
+  left: 0px;
+  right: 0px;
+  overflow: hidden;
 
 }
 

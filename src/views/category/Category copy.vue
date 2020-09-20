@@ -1,7 +1,8 @@
 <template>
   <div>
-     <scroll class="category_wrapper">
-        <ul>
+      <span>类别</span>
+      <div class="category_wrapper" ref="category_wrapper">
+        <ul ref="content" >
           <li>1</li>
           <li>2</li>
           <li>3</li>
@@ -103,38 +104,25 @@
           <li>99</li>
           <li>100</li>
         </ul>
+      </div>
 
-        <div>
-          <div>其他内容1</div>
-          <div>其他内容2</div>
-          <div>其他内容3</div>
-          <div>其他内容4</div>
-          <div>其他内容5</div>
-          <div>其他内容6</div>
-          <div>其他内容7</div>
-          <div>其他内容8</div>
-          <div>其他内容9</div>
-          <div>其他内容10</div>
-        </div>
 
-    </scroll>
 
- 
+
+      <div class="name"></div>
+
+
+
+
+
   </div>
 </template>
 
 <script>
 
-import Scroll from '@/components/common/scroll'
-
+import BScroll from 'better-scroll'
 
 export default {
-
-   components : {
-
-     Scroll
-   },
-
    data(){
      return {
        scroll : null,
@@ -145,7 +133,73 @@ export default {
    },
    mounted(){
 
-     
+     this.scroll = new BScroll(this.$refs.category_wrapper,{
+
+        probeType: 3,
+        freeScroll: true,
+        scrollX: true,
+        scrollY: true,
+        disableMouse: true,
+        useTransition: true,
+        observeDOM: true, // 开启 observe-dom 插件
+        pullDownRefresh: {
+          threshold : 30
+        },
+        pullUpLoad: {
+          threshold : 30
+        },
+        zoom: {
+          start: 1,
+          min: 0.5,
+          max: 2
+        },
+        mouseWheel: {
+          speed: 20,
+          invert: false,
+          easeTime: 300
+        },
+        /*****
+        scrollbar: {
+          fade: true,
+          interactive: false // 1.8.0 新增
+        }* */
+
+
+     });
+ 
+
+      this.scroll.on('scroll', (position) => {
+       // console.log("=========scroll===============");
+      //   console.log(position);
+      });
+
+      this.scroll.on('pullingDown', () => {
+        console.log("=========pullingDown===============");
+        console.log(this);
+        setTimeout(()=>{
+
+
+            var content = this.$refs.content;
+            for(let i =0;i<this.step;i++ ){
+                this.min --;
+                var li = document.createElement('li');
+                li.innerHTML = this.min+'';
+                content.insertBefore(li,content.childNodes[0]);
+            }
+           
+            this.scroll.finishPullDown();
+
+             this.scroll.refresh();
+        },200);
+      });
+      this.scroll.on('scrollStart', () => {
+
+        console.log("=========scrollStart===============");
+      });
+
+      this.scroll.on('pullingUp', () => {
+       console.log("=========pullingUp===============");
+      });
    }
 }
 </script>
@@ -157,6 +211,8 @@ export default {
   height: 150px;
   background-color: red;
   overflow: hidden;
+
+
 
 
 }
