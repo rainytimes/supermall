@@ -3,7 +3,7 @@
       <nav-bar class="home-nav" >
           <div slot="center"   >购物街</div>
       </nav-bar>
-      <scroll class="homeScroll" ref="scroll" @scrolling="scrolling" > 
+      <scroll class="homeScroll" ref="scroll" @scrolling="scrolling" :probe-type="3"  @pullingDown="pullingDown" @pullingUp="pullingUp" > 
         <home-swiper :items="banner.list" ></home-swiper>
         
         <recommend :items="recommend.list" />
@@ -50,7 +50,8 @@ export default {
        keywords:[],
        dKeyword:[],
        goods : [],
-       showGoTop : false
+       showGoTop : false,
+       pageNo : 1
      };
    },
    components : {
@@ -76,28 +77,78 @@ export default {
       });
 
 
-      getHomeGoods()
-      .then(result=>{
-          console.log(result);
+      getHomeGoods({
+         params : {
+          pageNo : this.pageNo 
+        }
+      }).then(result=>{
+         // console.log(result);
           this.goods = result.data;
       });
+
+   
 
 
 
 
    },
    mounted(){
-    //  console.log('===mounted====1===');
-    //  console.log(this.result);
-    //  console.log('===mounted====2===');
+     var refresh = this.debounce(this.$refs.scroll.refresh,500);
+     //监听事件 事件总线模型
+     this.$EventBus.$on('imageLoad',()=>{
+        //console.log('=====333===imageLoad=========');
+        //防抖函数与节流函数
 
-    //this.$refs.scroll.on
+        //这里使用防抖函数处理
+        //this.$refs.scroll.refresh();
+        refresh();
+     });
+        
+    
 
    },
    methods : {
+
+     //防抖函数
+     debounce(fn,delay=300){
+        var timer = null;
+        return function(...args){
+          if(timer) {
+            clearTimeout(timer);
+          }  
+          timer = setTimeout(()=>{
+            fn.apply(this,args);
+          },delay);
+        }
+     },
+
      scrolling(position){
         this.showGoTop = (position.y < -15);
+     },
+     pullingDown(){
+       console.log('pullingDown===========');
+     },
+     pullingUp(){
+       
+      getHomeGoods({
+        params : {
+          pageNo : ++ this.pageNo 
+        }
+      }).then(result=>{
+        //console.log(this.pageNo);
+       // console.log(result);
+         if(result.data){
+             this.goods.push(...result.data);
+         }
+
+         //this.goods.splice(this.goods.length-1,0,result.data);
+
+
+
+         this.$refs.scroll.finishPullUp();
+      });
      }
+
    }
 }
 </script>

@@ -1,4 +1,4 @@
-import {request,myRequest} from './Request';
+import { request, myRequest } from './Request';
 import Axios from 'axios';
 
 /* const homeNetwork = {
@@ -10,18 +10,20 @@ import Axios from 'axios';
 } */
 
 
-export  function  getHomeMultiData() {
-  return request({
-    url : '/home/multidata'
+export function getHomeMultiData() {
+    return request({
+        url: '/home/multidata'
 
-  });
+    });
 };
 
 
-export function getHomeGoods(){
-
-  return myRequest({
-    url : '/data/goods'
-  });
+export function getHomeGoods(options) {
+    options = options ? options : {};
+    return myRequest({... {
+            url: '/data/goods'
+        },
+        ...options
+    });
 
 }

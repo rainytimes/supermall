@@ -9,6 +9,14 @@
 import BScroll from "better-scroll";
 
 export default {
+
+  props:{
+    probeType : {
+      type : Number,
+      default : 0
+    }
+  },
+
   data() {
     return {
       scroll: null,
@@ -16,29 +24,41 @@ export default {
   },
 
   methods:{
-      scrollTo(x,y){
-          this.scroll.scrollTo(x,y);
+      scrollTo(x,y,time=500){
+          this.scroll.scrollTo(x,y,time);
           this.$emit('scrolling',{x:x,y:y});
+      },
+      finishPullDown(){
+          this.scroll.finishPullDown();
+      },
+      finishPullUp(){
+          this.scroll.finishPullUp();
+      },
+      refresh(){
+        console.log('=====refresh=========');
+        this.scroll.refresh();
       }
+     
   },
 
   mounted() {
 
     
     this.scroll = new BScroll(this.$refs.scroll_wrapper, {
-       probeType: 3,
+      probeType: this.probeType,
+      click : true,
       freeScroll: true,
       scrollX: true,
       scrollY: true,
       disableMouse: true,
       useTransition: true,
-         observeDOM: true, // 开启 observe-dom 插件
-    //   pullDownRefresh: {
-    //     threshold: 30,
-    //   },
-    //   pullUpLoad: {
-    //     threshold: 30,
-    //   },
+      //  observeDOM: true, // 开启 observe-dom 插件
+        pullDownRefresh: {
+        threshold: 30,
+        },
+        pullUpLoad: {
+          threshold: 30,
+        },
     //   zoom: {
     //     start: 1,
     //     min: 0.5,
@@ -64,6 +84,14 @@ export default {
          
     });
 
+   
+    this.scroll.on('pullingDown',()=>{
+        this.$emit('pullingDown');
+    });
+
+    this.scroll.on("pullingUp", () => {
+      this.$emit('pullingUp');
+    });
     // this.scroll.on("pullingDown", () => {
     //   console.log("=========pullingDown===============");
     //   console.log(this);

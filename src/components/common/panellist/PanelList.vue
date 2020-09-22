@@ -2,9 +2,9 @@
   <div class="panelList"  >
 
       <div class="panelListItem"  v-for="(item,index) in items" >
-          <a :href="item.link" :title="item.t" >
+          <a :href="item.link" :title="item.t">
             <div>
-                <img :src="prefix + item.img" >
+                <img :src="prefix + item.img"  @load="imageLoad"  >
             </div>
             <div class="title" >
                  {{subTitle(item.t)}}
@@ -44,6 +44,10 @@ export default {
     },
     showPrice(jp){
       return jp/100;
+    },
+
+    imageLoad(){
+     this.$EventBus.$emit('imageLoad');
     }
   }
 }

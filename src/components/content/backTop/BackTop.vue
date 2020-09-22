@@ -28,12 +28,16 @@ export default {
             }
             this.scroll.scrollTo(0,0);
         }
-    } 
+    },
+    mounted(){
+        
+
+    }
 }
 </script>
 <style scoped>
 .backTop{
-    position:absolute;
+    position:fixed;
     bottom: 40px;
     right: 10px;
 }
