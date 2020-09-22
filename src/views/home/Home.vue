@@ -93,6 +93,8 @@ export default {
 
    },
    mounted(){
+
+     //构建防抖函数
      var refresh = this.debounce(this.$refs.scroll.refresh,500);
      //监听事件 事件总线模型
      this.$EventBus.$on('imageLoad',()=>{
