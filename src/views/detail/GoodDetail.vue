@@ -3,12 +3,7 @@
       <nav-bar class="detail-nav" >
           <div slot="left"><a @click="goback" >&lt;</a></div>
           <div slot="center">
-              <div class="nav-btn" >
-                  <div class="nav-btn-item" >商品</div>
-                  <div class="nav-btn-item" >参数</div>
-                  <div class="nav-btn-item" >评论</div>
-                  <div class="nav-btn-item" >推荐</div>
-              </div>
+              <detail-navbar :titles="titles" ></detail-navbar>
           </div>
           <div slot="right">+</div>
       </nav-bar>
@@ -17,17 +12,22 @@
 </template>
 <script>
 
+
 import NavBar from '@/components/common/navbar/NavBar'
+
+import DetailNavbar from './childComps/DetailNavbar'
 
 export default {
   name : 'GoodDetail',
   data(){
     return {
         id : null,
+        titles : ['商品','参数','评论','推荐']
     }
   },
   components : {
-    NavBar
+    NavBar,
+    DetailNavbar
   },
   methods : {
     goback(){
