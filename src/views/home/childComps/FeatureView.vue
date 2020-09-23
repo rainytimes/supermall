@@ -2,7 +2,7 @@
 
   <div class="featureView" >
         <a :href="link" >
-          <img src="~assets/img/home/recommend_bg.jpg" >
+          <img src="~assets/img/home/recommend_bg.jpg" @load="$emit('load')" >
         </a>
   </div>
 

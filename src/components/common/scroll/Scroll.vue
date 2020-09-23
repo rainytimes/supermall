@@ -35,15 +35,14 @@ export default {
           this.scroll.finishPullUp();
       },
       refresh(){
-        console.log('=====refresh=========');
         this.scroll.refresh();
       }
-     
+
   },
 
   mounted() {
 
-    
+
     this.scroll = new BScroll(this.$refs.scroll_wrapper, {
       probeType: this.probeType,
       click : true,
@@ -77,20 +76,24 @@ export default {
     });
 
     this.scroll.on("scroll", (position) => {
-        
+
         if(position.y < 0){
             this.$emit('scrolling',position);
         }
-         
+
     });
 
-   
+
     this.scroll.on('pullingDown',()=>{
         this.$emit('pullingDown');
+        setTimeout(()=>{
+            this.scroll.finishPullDown();
+        },100)
     });
 
     this.scroll.on("pullingUp", () => {
       this.$emit('pullingUp');
+
     });
     // this.scroll.on("pullingDown", () => {
     //   console.log("=========pullingDown===============");

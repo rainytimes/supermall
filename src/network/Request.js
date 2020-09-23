@@ -8,7 +8,7 @@ const axiosInst = axios.create({
 
 
 const myAxiosInst = axios.create({
-    baseURL: 'http://192.168.1.12:4545',
+    baseURL: 'http://localhost:4545',
     timeout: 60000
 });
 
@@ -29,8 +29,6 @@ export function request(config, success, failure) {
 
     //拦截器
     axiosInst.interceptors.request.use(config => {
-        //console.log("==========request====");
-        //console.log(config);
         return config;
     }, error => {
         console.log(error);
@@ -38,7 +36,6 @@ export function request(config, success, failure) {
 
 
     axiosInst.interceptors.response.use(result => {
-        //console.log(result.data);
         return result.data;
     }, error => {
         console.log(error);
@@ -51,9 +48,6 @@ export function request(config, success, failure) {
 
 
 myAxiosInst.interceptors.response.use(result => {
-    console.log('========1=========');
-    console.log(result.data);
-    console.log('========2=========');
     return result.data;
 }, error => {
     console.log(error);

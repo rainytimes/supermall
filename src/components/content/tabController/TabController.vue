@@ -19,17 +19,25 @@ export default {
   methods : {
     changeItem(index){
       this.currentIndex = index;
+      this.$emit('changeCurrentIndex',this.currentIndex);
+    },
+    getCurrentIndex(){
+      return items[this.currentIndex];
+    },
+    setCurrentIndex(index){
+      this.currentIndex = index;
     }
+
   }
 }
 </script>
 <style   scoped>
 .tabController{
   display: flex;
-  line-height: 24px;
+  line-height: 40px;
   height: 40px;
   font-size : 15px;
-  background-color: #FFFFFF;
+  background-color: #ddd;
 }
 .tabControllerItem {
   flex: 1;

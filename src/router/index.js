@@ -10,6 +10,7 @@ const Home = ()=> import('views/home/Home');
 const Category = ()=> import('views/category/Category');
 const Trolley = ()=> import('views/trolley/Trolley');
 const Profile = ()=> import('views/profile/Profile');
+const GoodDetail = ()=>import('views/detail/GoodDetail')
 
 
 Vue.use(VueRouter);
@@ -25,15 +26,18 @@ const routes = [
   },
   {
     path : '/category',
-    component : ()=>import('../views/category/Category.vue')
+    component : Category
   },
   {
     path : '/profile',
-    component : ()=>import('../views/profile/Profile.vue')
+    component : Profile
   },
   {
     path : '/trolley',
-    component : ()=>import('../views/trolley/Trolley.vue')
+    component : Trolley
+  },{
+    path : '/goodDetail/:id',
+    component : GoodDetail
   }
 ];
 

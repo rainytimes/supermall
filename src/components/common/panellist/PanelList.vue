@@ -2,7 +2,9 @@
   <div class="panelList"  >
 
       <div class="panelListItem"  v-for="(item,index) in items" >
-          <a :href="item.link" :title="item.t">
+
+
+          <a  :title="item.t" @click="goodDetails(item)" >
             <div>
                 <img :src="prefix + item.img"  @load="imageLoad"  >
             </div>
@@ -48,6 +50,12 @@ export default {
 
     imageLoad(){
      this.$EventBus.$emit('imageLoad');
+    },
+    goodDetails(item){
+      // console.log(item);
+      //this.$router.
+      this.$router.push({path : '/goodDetail/'+item.sku});
+
     }
   }
 }
