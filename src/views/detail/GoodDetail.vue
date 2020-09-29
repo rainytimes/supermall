@@ -7,35 +7,52 @@
           </div>
           <div slot="right">+</div>
       </nav-bar>
-{{id}}
+
+      <good-swiper></good-swiper>
+
+
   </div>
 </template>
 <script>
 
 
 import NavBar from '@/components/common/navbar/NavBar'
+import GoodSwiper from '@/components/common/swiper4/Swiper'
 
 import DetailNavbar from './childComps/DetailNavbar'
+
+import {goodDetail} from '@/network/GoodDetailNetwork'
 
 export default {
   name : 'GoodDetail',
   data(){
     return {
         id : null,
-        titles : ['商品','参数','评论','推荐']
+        titles : ['商品','参数','评论','推荐'],
+        data : null
     }
   },
   components : {
     NavBar,
-    DetailNavbar
+    DetailNavbar,
+    GoodSwiper
   },
   methods : {
     goback(){
       this.$router.go(-1);
+    },
+    getGoodData(id){
+      goodDetail(id)
+      .then(data=>{
+        console.log(data);
+        this.data = data;
+      });
     }
   },
+
   created(){
     this.id = this.$route.params.id;
+    this.getGoodData(this.id);
   }
 
 
