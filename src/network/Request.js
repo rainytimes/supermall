@@ -57,6 +57,18 @@ myAxiosInst.interceptors.response.use(result => {
 
 export function myRequest(config, success, failure) {
 
+    //拦截器
+    myAxiosInst.interceptors.request.use(config => {
+      return config;
+    }, error => {
+      console.log(error);
+    });
 
+
+    myAxiosInst.interceptors.response.use(result => {
+      return result;
+    }, error => {
+      console.log(error);
+    });
     return myAxiosInst(config);
 }

@@ -1,19 +1,15 @@
 <template>
   <swiper class="swiper" :options="swiperOption" ref="swiper"
-
     :auto-update="true"
     :auto-destroy="true"
     :delete-instance-on-destroy="true"
     :cleanup-styles-on-destroy="true"
-
-
    >
-    <swiper-slide>Slide 1</swiper-slide>
-    <swiper-slide>Slide 2</swiper-slide>
-    <swiper-slide>Slide 3</swiper-slide>
-    <swiper-slide>Slide 4</swiper-slide>
 
-    <div class="swiper-pagination" slot="pagination"></div>
+    <swiper-item   v-for="(item,i) in items"  :url="item" :index="i"  ></swiper-item>
+
+
+    <div class="swiper-pagination" slot="pagination" ref="pagination" ></div>
     <!--
     <div class="swiper-button-prev" slot="button-prev"></div>
     <div class="swiper-button-next" slot="button-next"></div>
@@ -22,34 +18,77 @@
 </template>
 
 <script>
-
- import { Swiper, SwiperSlide,directive } from 'vue-awesome-swiper'
+  import $ from 'jquery'
+  import { Swiper, SwiperSlide,directive } from 'vue-awesome-swiper'
   import 'swiper/css/swiper.css'
+
+  import SwiperItem from '@/components/common/swiper4/SwiperItem'
+
   export default {
-    name: 'swiper-example-pagination-fraction',
-    title: 'Fraction pagination',
+    props : {
+       items : {
+         type : Array,
+         default : function(){
+           return [];
+         }
+       }
+    },
     components: {
       Swiper,
-      SwiperSlide
+      SwiperSlide,
+      SwiperItem
     },
     directives: {
       swiper: directive
     },
     data() {
       return {
+
         swiperOption: {
           pagination: {
             el: '.swiper-pagination',
-            type: 'fraction'
+            type: 'custom',
+            renderCustom : (swiper,index,total)=>{
+              let pc = $(this.$refs.pagination);
+              if($.trim(pc.html()).length == 0){
+                //插入分页样式模板
+                var indexSpan = $('<span class="swiper-pagination-current" >'+index+'</span>');
+                var splitSpan = $('<span class="swiper-pagination-split" >/</span>');
+                var totalSpan = $('<span class="swiper-pagination-total" >'+total+'</span>');
+                var info = $('<div class="swiper-pagination-body" ></div>')
+                pc.append(info);
+                info.append(indexSpan);
+                info.append(splitSpan);
+                info.append(totalSpan);
+              }else{
+                 $(pc).find('.swiper-pagination-current').html(index);
+                 $(pc).find('.swiper-pagination-total').html(total);
+              }
+
+            }
           },
           navigation: {
            // nextEl: '.swiper-button-next',
             //prevEl: '.swiper-button-prev'
           },
           on:{
-            init: function () {
-                console.log('swiper initialized');
+            init: ()=> {
+              console.log('swiper initialized');
+             // console.log(this.$refs.swiper.$el);
+              //
+              //setTimeout(()=>{
+               // let splitTxt = $(this.$refs.swiper.$el).find('.swiper-pagination-current');
+               // console.log(splitTxt);
+              //},500);
+
             },
+
+            imagesReady : ()=>{
+              //console.log('swiper imagesReady1111');
+              let splitTxt = $(this.$refs.swiper.$el).find('.swiper-pagination-current');
+              //console.log(splitTxt);
+            },
+
             // 使用es6的箭头函数，使this指向vue对象
             click: ()=>{
 
@@ -68,6 +107,10 @@
             transitionStart : ()=>{
               var swiper =  this.getSwiper();
               console.log(swiper.activeIndex  +"===transitionStart===="+swiper.isEnd);
+
+              //let splitTxt = $(this.$refs.swiper.$el).find('.swiper-pagination-current');
+              //console.log(splitTxt);
+
             }
           }
 
@@ -95,22 +138,16 @@
        // console.log('=================touchStart=================');
       },
 
+    },
+    computed : {
+
+
     }
   }
 </script>
 <style   scoped>
 .swiper {
-  height: 300px;
+  height: 400px;
   width: 100%;
-
-  .swiper-slide {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-weight: bold;
-    font-size: $font-size-huge * 2;
-    background-color: $white;
-  }
 }
 </style>
