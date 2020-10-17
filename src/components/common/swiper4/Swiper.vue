@@ -1,12 +1,12 @@
 <template>
-  <swiper class="swiper" :options="swiperOption" ref="swiper"
+  <swiper class="swiper" :options="swiperOption" ref="swiper" :style="swiperStyle"
     :auto-update="true"
     :auto-destroy="true"
     :delete-instance-on-destroy="true"
     :cleanup-styles-on-destroy="true"
    >
 
-    <swiper-item   v-for="(item,i) in items"  :url="item" :index="i"  ></swiper-item>
+    <swiper-item   v-for="(item,i) in items"  :url="item" :index="i" :imgClass="imgClass"  ></swiper-item>
 
 
     <div class="swiper-pagination" slot="pagination" ref="pagination" ></div>
@@ -26,6 +26,22 @@
 
   export default {
     props : {
+      swiperStyle : {
+        type : Object,
+        default : {}
+      },
+      slidesPerView : {
+        type : Number,
+        default : 1
+      },
+       imgClass : {
+         type : String,
+         default : ''
+       },
+       showPagination : {
+         type : Boolean,
+         default : true
+       },
        items : {
          type : Array,
          default : function(){
@@ -45,10 +61,15 @@
       return {
 
         swiperOption: {
+          slidesPerView: this.slidesPerView,
+          //spaceBetween: 30,
           pagination: {
             el: '.swiper-pagination',
             type: 'custom',
             renderCustom : (swiper,index,total)=>{
+              if(!this.showPagination){
+                return;
+              }
               let pc = $(this.$refs.pagination);
               if($.trim(pc.html()).length == 0){
                 //插入分页样式模板

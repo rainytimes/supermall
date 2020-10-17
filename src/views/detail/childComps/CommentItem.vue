@@ -1,5 +1,5 @@
 <template>
-    <div class="commentItmes" >
+    <div class="commentItem" >
         <div class="userInfo" >
               <img class="userimg"  :src="userimg"  >
               <span class="nickname" > {{comment.nickname}}</span>
@@ -9,13 +9,16 @@
         <div class="content" >
              {{comment.content}}
         </div>
+        <good-swiper :items="images" imgClass="buyerShowImg" :slidesPerView="3"  :swiperStyle="swiperStyle" :showPagination="showPagination" ></good-swiper>
     </div>
 </template>
 <script>
 import Heart from '@/components/common/heart/Heart'
+import GoodSwiper from '@/components/common/swiper4/Swiper'
 export default {
     components : {
-        Heart
+        Heart,
+        GoodSwiper
     },
     props : {
        comment : {
@@ -25,7 +28,10 @@ export default {
     },
     data(){
         return {
-
+            swiperStyle : {
+              height : '130px'
+            },
+            showPagination:false
         };
     },
     computed : {
@@ -46,9 +52,19 @@ export default {
                 return 'https://'+this.comment.userImageUrl;
             }
             return 'https://misc.360buyimg.com/user/myjd-2015/css/i/peisong.jpg';
+        },
+        images(){
+          if(this.comment && this.comment.images && this.comment.images.length > 0){
+              var urls = [];
+              for(let i of  this.comment.images){
+                urls.push(i.imgUrl);
+              }
+              return  urls;
+          }
+          return null;
         }
     },
-    
+
 }
 </script>
 <style scoped>
@@ -59,7 +75,7 @@ export default {
 
 .userInfo{
  font-size: 12px;
- 
+
  padding: 5px 0px 10px 0px;
 
 }
@@ -79,6 +95,16 @@ export default {
   width:16px;
   height:16px;
 
+}
+
+
+
+</style>
+<style  >
+
+.commentItem img.buyerShowImg{
+  width: 120px;
+  height: 120px;
 }
 
 </style>

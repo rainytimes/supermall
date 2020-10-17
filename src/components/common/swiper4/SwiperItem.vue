@@ -1,6 +1,6 @@
 <template>
   <swiper-slide class="swiper-item" >
-      <img class="img" :src="url" >
+      <img class="img" :class="imgClass"  :src="url" >
   </swiper-slide>
 </template>
 <script>
@@ -12,6 +12,10 @@ export default {
     SwiperSlide
   },
   props : {
+    imgClass : {
+      type : String,
+      default : ''
+    },
     url : String,
     index : Number
   },

@@ -14,10 +14,10 @@
 
       <div class="dispatch" ><span class="sendTo" >送至</span><span class="adress" >{{sendTo}}</span></div>
 
-      
+
       <comment :hotCommentTagStatistics="hotCommentTagStatistics" :count="commentCountStr" :comments="comments" > </comment>
 
-
+      <div v-html="details"></div>
 
   </div>
 </template>
@@ -49,7 +49,7 @@ export default {
     GoodSwiper,
     Price,
     Comment,
-  
+
   },
   methods : {
     goback(){
@@ -100,6 +100,12 @@ export default {
         return this.data.comment.comments;
       }
       return [];
+    },
+    details(){
+      if(this.data && this.data.details){
+        return  this.data.details.content;
+      }
+      return '';
     }
   },
 
